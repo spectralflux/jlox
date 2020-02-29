@@ -106,6 +106,18 @@ class Scanner {
           while (peek() != '\n' && !isAtEnd()) {
             advance();
           }
+        } else if (match('*')) {
+          // multiline comment
+          while (peek() != '*' && peekNext() != '/' && !isAtEnd()) {
+            if (peek() == '\n') {
+              line++;
+            }
+            advance();
+          }
+
+          if (isAtEnd()) {
+            Lox.error(line, "Unterminated multiline comment.");
+          }
         } else {
           addToken(SLASH);
         }
