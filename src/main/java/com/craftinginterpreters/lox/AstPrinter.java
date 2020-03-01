@@ -3,18 +3,6 @@ package com.craftinginterpreters.lox;
 // Creates an unambiguous, if ugly, string representation of AST nodes.
 class AstPrinter implements Expr.Visitor<String> {
 
-  public static void main(String[] args) {
-    Expr expression = new Expr.Binary(
-        new Expr.Unary(
-            new Token(TokenType.MINUS, "-", null, 1),
-            new Expr.Literal(123)),
-        new Token(TokenType.STAR, "*", null, 1),
-        new Expr.Grouping(
-            new Expr.Literal(null)));
-
-    System.out.println(new AstPrinter().print(expression));
-  }
-
   String print(Expr expr) {
     return expr.accept(this);
   }
