@@ -1,5 +1,7 @@
 package com.craftinginterpreters.lox;
 
+import com.craftinginterpreters.lox.Expr.Literal;
+
 class Interpreter implements Expr.Visitor<Object> {
 
   @Override
@@ -65,6 +67,9 @@ class Interpreter implements Expr.Visitor<Object> {
             "Operands must be two numbers or two strings.");
       case SLASH:
         checkNumberOperands(expr.operator, left, right);
+        if (right.equals(0.0)) {
+          throw new RuntimeError(expr.operator, "Cannot divide by zero.");
+        }
         return (double) left / (double) right;
       case STAR:
         checkNumberOperands(expr.operator, left, right);
