@@ -49,7 +49,7 @@ class Parser {
     }
 
     consume(SEMICOLON, "Expect ';' after variable declaration.");
-    return null; //new Stmt.Var(name, initializer);
+    return new Stmt.Var(name, initializer);
   }
 
   private Expr expression() {
