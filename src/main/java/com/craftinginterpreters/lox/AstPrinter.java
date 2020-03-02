@@ -1,10 +1,18 @@
 package com.craftinginterpreters.lox;
 
+import com.craftinginterpreters.lox.Expr.Assign;
+import com.craftinginterpreters.lox.Expr.Variable;
+
 // Creates an unambiguous, if ugly, string representation of AST nodes.
 class AstPrinter implements Expr.Visitor<String> {
 
   String print(Expr expr) {
     return expr.accept(this);
+  }
+
+  @Override
+  public String visitAssignExpr(Assign expr) {
+    return null;
   }
 
   @Override
@@ -28,6 +36,11 @@ class AstPrinter implements Expr.Visitor<String> {
   @Override
   public String visitUnaryExpr(Expr.Unary expr) {
     return parenthesize(expr.operator.lexeme, expr.right);
+  }
+
+  @Override
+  public String visitVariableExpr(Variable expr) {
+    return null;
   }
 
   private String parenthesize(String name, Expr... exprs) {
