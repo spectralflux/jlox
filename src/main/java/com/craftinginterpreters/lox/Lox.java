@@ -16,14 +16,28 @@ public class Lox {
   static boolean hadRuntimeError = false;
 
   public static void main(String[] args) throws IOException {
-    if (args.length > 1) {
-      System.out.println("Usage: jlox [script]");
-      System.exit(64);
-    } else if (args.length == 1) {
-      runFile(args[0]);
-    } else {
-      runPrompt();
-    }
+    Thread runThread = new Thread(() -> {
+      try {
+        if (args.length > 1) {
+          System.out.println("Usage: jlox [script]");
+          System.exit(64);
+        } else if (args.length == 1) {
+          runFile(args[0]);
+        } else {
+          runPrompt();
+          System.exit(0);
+        }
+      } catch (IOException e) {
+        System.out.println(e.getStackTrace());
+        System.exit(1);
+      }
+    });
+
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      runThread.interrupt();
+    }));
+
+    runThread.start();
   }
 
   private static void runFile(String path) throws IOException {
@@ -44,7 +58,7 @@ public class Lox {
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
 
-    for (; ; ) {
+    while (!Thread.currentThread().isInterrupted()) {
       System.out.print("> ");
       run(reader.readLine());
     }
@@ -55,7 +69,6 @@ public class Lox {
     List<Token> tokens = scanner.scanTokens();
     Parser parser = new Parser(tokens);
     List<Stmt> statements = parser.parse();
-
 
     // Stop if there was a syntax error.
     if (hadError) {
