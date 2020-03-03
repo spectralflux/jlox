@@ -1,1 +1,1 @@
-https://craftinginterpreters.com/control-flow.html
+https://craftinginterpreters.com/functions.html
