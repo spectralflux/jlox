@@ -2,10 +2,14 @@ package com.craftinginterpreters.lox;
 
 import com.craftinginterpreters.lox.Expr.Assign;
 import com.craftinginterpreters.lox.Expr.Call;
+import com.craftinginterpreters.lox.Expr.Get;
 import com.craftinginterpreters.lox.Expr.Logical;
+import com.craftinginterpreters.lox.Expr.Set;
+import com.craftinginterpreters.lox.Expr.This;
 import com.craftinginterpreters.lox.Expr.Variable;
 
 // Creates an unambiguous, if ugly, string representation of AST nodes.
+// TODO half empty, delete?
 class AstPrinter implements Expr.Visitor<String> {
 
   String print(Expr expr) {
@@ -28,6 +32,11 @@ class AstPrinter implements Expr.Visitor<String> {
   }
 
   @Override
+  public String visitGetExpr(Get expr) {
+    return null;
+  }
+
+  @Override
   public String visitGroupingExpr(Expr.Grouping expr) {
     return parenthesize("group", expr.expression);
   }
@@ -42,6 +51,16 @@ class AstPrinter implements Expr.Visitor<String> {
 
   @Override
   public String visitLogicalExpr(Logical expr) {
+    return null;
+  }
+
+  @Override
+  public String visitSetExpr(Set expr) {
+    return null;
+  }
+
+  @Override
+  public String visitThisExpr(This expr) {
     return null;
   }
 
