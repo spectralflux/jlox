@@ -1,1 +1,1 @@
-https://craftinginterpreters.com/resolving-and-binding.html
+https://craftinginterpreters.com/a-bytecode-virtual-machine.html
